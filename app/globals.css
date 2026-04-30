@@ -4,6 +4,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --color-darkColor: #151515;
+  --color-lightColor: #52525b;
+  --color-lightOrange: #fca99b;
+  --color-lightBlue: #7688d8;
+  --color-darkBlue: #6c7fd8;
+  --color-darkText: #686e7d;
+  --color-lightBg: #F8F8FB;
+}
+
 /* :root {
   --background: #ffffff;
   --foreground: #171717;
