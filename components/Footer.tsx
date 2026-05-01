@@ -1,8 +1,14 @@
 import React from 'react'
+import Container from './Container'
 
 function Footer() {
   return (
-    <div>Footer</div>
+    <footer>
+        <Container>
+            Footer
+
+        </Container>
+    </footer>
   )
 }
 
