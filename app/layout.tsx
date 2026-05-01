@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import {ClerkProvider} from "@clerk/nextjs";
 
 const jetbrainsMono = JetBrains_Mono({subsets:['latin'],variable:'--font-mono'});
 
@@ -32,7 +33,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
+    <ClerkProvider>
+      <html
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, playfairDisplayHeading.variable, jetbrainsMono.variable, "font-sans", inter.variable)}
     >
@@ -42,5 +44,6 @@ export default function RootLayout({
         <Footer />
         </body>
     </html>
+    </ClerkProvider>
   );
 }

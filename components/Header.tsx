@@ -5,8 +5,11 @@ import Container from './Container'
 import MobileMenu from './MobileMenu'
 import SearchBar from './SearchBar'
 import CartIcon from './CartIcon'
+import { currentUser } from '@clerk/nextjs/server'
 
-function Header() {
+async function Header() {
+  const user = await currentUser();
+
   return (
     <header className='border-b border-g-gray-400 py-5'>
         <Container className='flex items-center justify-between gap-7 text-lightColor'>
