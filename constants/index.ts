@@ -9,3 +9,13 @@ const headerData = [
 ]
 
 export default headerData;
+
+// Adding data to back-end
+
+export const productType = [
+    {title: 'Tshirt', value: 'tshirt'},
+    {title: 'Jacket', value: 'jacket'},
+    {title: 'Pants', value: 'pants'},
+    {title: 'Hoodie', value: 'hoodie'},
+    {title: 'Short', value: 'short'},
+];
