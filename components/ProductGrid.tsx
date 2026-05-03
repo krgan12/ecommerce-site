@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import HomeTabBar from './ui/HomeTabBar'
 import { productType } from '@/constants';
 import { client } from '@/sanity/lib/client';
+import { Product } from '@/sanity.types';
 
 function ProductGrid() {
     const [selectedTab, setSelectedTab] = useState(productType[0]?.title || "");
@@ -33,8 +34,8 @@ function ProductGrid() {
         <HomeTabBar selectedTab={selectedTab} onTabSelect={setSelectedTab} />
         {loading ? (
             <div><span>Product is loading...</span></div>
-        ) : (products?.map((item) => (
-            <p key={item?.id}>{item?.name}</p>)
+        ) : (products?.map((item: Product) => (
+            <p key={item?._id}>{item?.name}</p>)
         ))}
     </div>
   )
