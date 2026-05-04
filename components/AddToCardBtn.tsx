@@ -18,7 +18,7 @@ function AddToCardBtn({product, className}: Props) {
     const isOutOfStock = product?.stock == 0;
     
   return (
-    <div className='w-full'>
+    <div className='w-full h-12 flex items-center'>
         {itemCount ? (
             <div className='w-full text-sm'>
                 <div className='flex items-center justify-between'>
