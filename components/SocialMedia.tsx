@@ -50,10 +50,20 @@ function SocialMedia({className, iconClassName, tooltipClassName}: Props) {
         {socialLink?.map((item) => (
             <Tooltip key={item?.title}>
             <TooltipTrigger asChild>
-                <Link href={item?.href} target={item?.target} rel='noopener noreferrer' className={cn('p-2 border rounded-full hover:text-white hover:border-white hoverEffect', iconClassName)}>
-                    {/* <Github />  */}
+                {/* <Link href={item?.href} target={item?.target} rel='noopener noreferrer' className={cn('p-2 border rounded-full hover:text-white hover:border-white hoverEffect', iconClassName)}>
                     {item?.icon}
-                </Link>
+                </Link> */}
+                <a
+    href={item.href}
+    target={item.href}
+    rel="noopener noreferrer"
+    className={cn(
+      'p-2 border rounded-full hover:text-white hover:border-white hoverEffect',
+      iconClassName
+    )}
+  >
+    {item.icon}
+  </a>
             </TooltipTrigger>
             <TooltipContent className={cn('bg-white text-darkColor font-semibold', tooltipClassName)}>
                 {item?.title}
