@@ -55,7 +55,7 @@ function SocialMedia({className, iconClassName, tooltipClassName}: Props) {
                 </Link> */}
                 <a
     href={item.href}
-    target={item.href}
+    target={item.target}
     rel="noopener noreferrer"
     className={cn(
       'p-2 border rounded-full hover:text-white hover:border-white hoverEffect',

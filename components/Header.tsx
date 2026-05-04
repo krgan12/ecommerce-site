@@ -11,15 +11,17 @@ import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
 import AuthButtons from './AuthButtons'
 import Link from 'next/link'
 import { ListOrdered, ShoppingBag } from 'lucide-react'
+import { getAllCategories } from '@/sanity/helpers/queries'
 
 async function Header() {
   const user = await currentUser();
-  console.log(user);
+  const categories = await getAllCategories();
+  console.log(categories);
 
   return (
     <header className='border-b border-g-gray-400 py-5 sticky top-0 z-50 bg-white'>
         <Container className='flex items-center justify-between gap-7 text-lightColor'>
-            <HeaderMenu />
+            <HeaderMenu categories={categories}/>
             <div className="w-auto md:w-1/3 flex items-center justify-center gap-2.5">
             <MobileMenu />
             <Logo className=''>Tulos</Logo>
