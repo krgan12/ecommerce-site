@@ -14,13 +14,13 @@ function ProductCharacteristics({product}: Props) {
                 {product?.name} : Characteristics
             </AccordionTrigger>
             <AccordionContent className='flex flex-col gap-1'>
-                <p className='flex items-center justify-between'>Brand: <span className='font-semibold tracking-wide'>Unknown</span></p>
-                <p className='flex items-center justify-between'>Collection: <span className='font-semibold tracking-wide'>2024</span></p>
-                <p className='flex items-center justify-between'>Type: <span className='font-semibold tracking-wide'>{product?.variant}</span></p>
-                <p className='flex items-center justify-between'>Stock: <span className='font-semibold tracking-wide'>{product?.stock ? "Available" : "Out of Stock"}</span></p>
-                <p className='flex items-center justify-between'>Intro:<span className='font-semibold tracking-wide'>{product?.intro}</span></p>
+                <div className='flex items-center justify-between'>Brand: <span className='font-semibold tracking-wide'>Unknown</span></div>
+                <div className='flex items-center justify-between'>Collection: <span className='font-semibold tracking-wide'>2024</span></div>
+                <div className='flex items-center justify-between'>Type: <span className='font-semibold tracking-wide'>{product?.variant}</span></div>
+                <div className='flex items-center justify-between'>Stock: <span className='font-semibold tracking-wide'>{product?.stock ? "Available" : "Out of Stock"}</span></div>
+                <div className='flex items-center justify-between'>Intro:<span className='font-semibold tracking-wide'>{product?.intro}</span></div>
             </AccordionContent>
-        </AccordionItem>
+        </AccordionItem>sds
     </Accordion>
   )
 }
