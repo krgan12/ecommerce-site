@@ -32,7 +32,7 @@ function AddToCardBtn({product, className}: Props) {
             </div>
         ):  (
         <Button
-        onClick={() => {
+        onClick={() => { 
             addItem(product)
             toast(`${product?.name?.substring(0,12)}... added succeessfully!`);
         }}
