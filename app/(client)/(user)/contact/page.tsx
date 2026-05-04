@@ -25,7 +25,7 @@ function ContactPage() {
             <Label htmlFor="name">Message</Label>
             <Textarea name='message' id='message' className='w-full px-3 py-2 border border-gray-300 rounded-md resize-none h-40' required/>
           </div>
-          <button>Send Message</button>
+          <button type='submit' className='bg-darkColor/80 text-white px-6 py-3 rounded-md text-sm font-semibold hover:bg-darkColor hoverEffect'>Send Message</button>
         </form>
     </Container>
   )
