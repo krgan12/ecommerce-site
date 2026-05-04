@@ -18,7 +18,13 @@ function QuantityBtn({product, className}: Props) {
     const isOutOfStock = product?.stock == 0;
     const handleRemoveProduct = () => {
         removeItem(product?._id);
-        toast(`Quantity Decreased successfully for: ${product?.name}`)
+        // toast(`Quantity Decreased successfully for: ${product?.name}`)
+        if (itemCount > 1) {
+            toast(`Quantity Decreased successfully for: ${product?.name}`)
+        }
+        else {
+            toast.success(`${product?.name?.substring(0,12)} removed successfully!`)
+        }
     }
   return (
     <div className={cn('flex items-center gap-1 text-base pb-1',className)}>
