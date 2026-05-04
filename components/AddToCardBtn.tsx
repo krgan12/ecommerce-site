@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import QuantityBtn from './QuantityBtn';
 import PriceFormatter from './PriceFormatter';
+import useCartStore from '@/store';
+import { toast } from 'sonner';
 
 interface Props {
     product: Product;
@@ -11,8 +13,10 @@ interface Props {
 }
 
 function AddToCardBtn({product, className}: Props) {
+    const { addItem, getItemCount } = useCartStore();
+    const itemCount  = getItemCount(product._id);
     const isOutOfStock = product?.stock == 0;
-    const itemCount = 0;
+    
   return (
     <div className='w-full'>
         {itemCount ? (
@@ -26,8 +30,14 @@ function AddToCardBtn({product, className}: Props) {
                     <PriceFormatter amount={product?.price ? product?.price * itemCount : 0 }/>
                 </div>
             </div>
-        ):  (<Button
+        ):  (
+        <Button
+        onClick={() => {
+            addItem(product)
+            toast(`${product?.name?.substring(0,12)}... added succeessfully!`);
+        }}
         disabled={isOutOfStock}
+
          className={cn('w-full bg-transparent text-darkColor shadow-none border border-darkColor/30 font-semibold tracking-wide hover:text-white hoverEffect', className)}>Add to cart</Button>
         )}
     </div>

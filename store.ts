@@ -69,3 +69,5 @@ const useCartStore = create<CartState>()(persist((set,get) => ({
 
 }), {name: 'cart-store'})
 )
+
+export default useCartStore;
