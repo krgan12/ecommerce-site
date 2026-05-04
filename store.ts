@@ -15,8 +15,8 @@ interface CartState {
     resetCart: () => void;
     getTotalPrice: () => number;
     getSubTotalPrice: () => number;
-    // getItemCount: (productId: string) => number;
-    // getGroupedItems: () => CartItem[];
+    getItemCount: (productId: string) => number;
+    getGroupedItems: () => CartItem[];
 }
 
 const useCartStore = create<CartState>()(persist((set,get) => ({
@@ -61,7 +61,11 @@ const useCartStore = create<CartState>()(persist((set,get) => ({
             return total + discountedPrice * item.quantity;
         }, 0);
     },
-    
+    getItemCount: (productId) => {
+        const item = get().items.find((item) => item.product._id === productId);
+        return item? item.quantity : 0;
+    },
+    getGroupedItems: () => get().items,
 
 }), {name: 'cart-store'})
 )
