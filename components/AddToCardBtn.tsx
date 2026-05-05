@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 interface Props {
     product: Product;
-    className?: string
+    className?: string;
 }
 
 function AddToCardBtn({product, className}: Props) {

@@ -24,7 +24,7 @@ async function Header() {
             <HeaderMenu categories={categories}/>
             <div className="w-auto md:w-1/3 flex items-center justify-center gap-2.5">
             <MobileMenu />
-            <Logo className=''>Tulos</Logo>
+            <Logo className='relative left-13'>Tulos</Logo>
             </div>
             <div className='w-auto md:w-1/3 flex items-center justify-end gap-5 '>
                <SearchBar />

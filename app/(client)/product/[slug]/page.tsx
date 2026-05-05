@@ -1,3 +1,4 @@
+// 'use client'
 import AddToCardBtn from '@/components/AddToCardBtn';
 import Container from '@/components/Container'
 import ImageView from '@/components/ImageView';
