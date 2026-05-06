@@ -166,6 +166,7 @@ function CartPage() {
                       <PriceFormatter className="text-lg font-bold text-black" amount={getTotalPrice()}/>
                     </div>
                     <Button
+                    disabled={loading}
                      onClick={handleCheckout}
                      className="w-full rounded-full font-semibold tracking-wide hoverEffect" size='lg'>Proceed to Checkout</Button>
                     <Link href={'/'} className="flex items-center justify-center py-2 border border-darkColor/50 rounded-full hover:border-darkColor hover:bg-darkColor/5 hoverEffect">
