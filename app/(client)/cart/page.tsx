@@ -18,12 +18,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react"
 import { toast } from "sonner";
 import payPalLogo from "@/images/paypalLogo.png"
+import { createCheckoutSession, Metadata } from "@/actions/createCheckoutSession";
 
 function CartPage() {
   const [isClient, setIsClient] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {isSignedIn} = useAuth();
   const {deleteCartProduct, getTotalPrice, getItemCount, getSubTotalPrice, resetCart, getGroupedItems} = useCartStore();
-  const user = useUser();
+  const {user} = useUser();
   useEffect(() => {
     // 1. Set the timer
     const timer = setTimeout(() => {
@@ -48,6 +50,29 @@ function CartPage() {
     if (confirmed) {
       resetCart();
       toast('Your cart reset successfully!');
+    }
+  }
+
+  const handleCheckout = async() => {
+    // toast.error('Checkout on process');
+    setLoading(true);
+    try {
+      const metadata: Metadata = {
+        orderNumber: crypto.randomUUID(),
+        customerName: user?.fullName ?? 'Unknown',
+        customerEmail: user?.emailAddresses[0]?.emailAddress ?? 'Unknown',
+        clerkUserId: user!.id,
+      };
+      const checkoutUrl = await createCheckoutSession(cartProducts, metadata);
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+      }
+    }
+    catch(error) {
+      console.error('Error creating checkout session: ', error)
+    }
+    finally {
+      setLoading(false);
     }
   }
 
@@ -140,7 +165,9 @@ function CartPage() {
                       <span>Total</span>
                       <PriceFormatter className="text-lg font-bold text-black" amount={getTotalPrice()}/>
                     </div>
-                    <Button className="w-full rounded-full font-semibold tracking-wide hoverEffect" size='lg'>Proceed to Checkout</Button>
+                    <Button
+                     onClick={handleCheckout}
+                     className="w-full rounded-full font-semibold tracking-wide hoverEffect" size='lg'>Proceed to Checkout</Button>
                     <Link href={'/'} className="flex items-center justify-center py-2 border border-darkColor/50 rounded-full hover:border-darkColor hover:bg-darkColor/5 hoverEffect">
                       <Image src={payPalLogo} alt="paypalLogo" className="w-20"/>
                     </Link>
