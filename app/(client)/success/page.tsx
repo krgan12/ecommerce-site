@@ -1,8 +1,9 @@
 'use client'
 
 import useCartStore from "@/store";
-import { Check } from "lucide-react";
+import { Check, Home, Package, ShoppingBag } from "lucide-react";
 import { animate, motion } from "motion/react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation"
 import { useEffect } from "react";
 
@@ -50,6 +51,21 @@ function SuccessPage() {
             <span>Track your order status anytime</span>
           </li>
           </ul>
+          </div>
+          {/* Order tracker */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link href={'/'} className="flex items-center justify-center px-4 py-3 font-semibold
+            bg-black text-white rounded-lg hover:bg-gray-800 transition-all duration-300 shadow-md">
+              <Home className="w-5 h-5 mr-2" /> Home
+            </Link>
+            <Link href={'/orders'} className="flex items-center justify-center px-4 py-3 font-semibold
+            bg-white text-black rounded-lg hover:bg-gray-100 transition-all duration-300 shadow-md">
+              <Package className="w-5 h-5 mr-2" /> Orders
+            </Link>
+            <Link href={'/'} className="flex items-center justify-center px-4 py-3 font-semibold
+            bg-indigo-700 text-white rounded-lg hover:bg-indigo-700 transition-all duration-300 shadow-md">
+              <ShoppingBag className="w-5 h-5 mr-2" /> Shop
+            </Link>
           </div>
         </motion.div>
     </div>
