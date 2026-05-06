@@ -1,0 +1,143 @@
+// import { Metadata } from "@/actions/createCheckoutSession";
+// import stripe from "@/lib/stripe";
+// import { backendClient } from "@/sanity/lib/backendClient";
+// import { error } from "console";
+// // import { Metadata } from "next";
+// import { headers } from "next/headers";
+// import { NextRequest, NextResponse } from "next/server";
+// import Stripe from "stripe";
+
+
+
+// export const runtime = "nodejs";
+
+// export async function POST(request: NextRequest) {
+    
+//     console.log("🔥 WEBHOOK ENTERED");
+
+//     const body = await request.text();
+//     const headersList = headers();
+//     const sig =   (await headersList).get('stripe-signature');
+
+//     if (!sig) {
+//         return NextResponse.json({
+//             error: "No Signature"
+//         }, {status: 400})
+//     }
+    
+
+//     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+//     if (!webhookSecret) {
+//         console.log('Stripe web book secret is not set');
+//         return NextResponse.json({
+//             error: 'Stripe webhook secret is not set '
+//         }, {status: 400})
+//     }
+
+//     let event: Stripe.Event;
+
+//     try {
+//         console.log("Sig", sig);
+//         console.log("SECRET", webhookSecret);
+        
+//         event = await stripe.webhooks.constructEvent(body, sig, webhookSecret);
+//     }
+//     catch(error) {
+//         console.error('Webhook signature verification failed', error);
+//         return NextResponse.json({
+//             error: `Webhook Error: ${error}`
+//         }, { status: 400 })
+//     }
+//     if (event.type === 'checkout.session.completed') {
+//         const session = event.data.object as Stripe.Checkout.Session;
+//         const invoice = session.invoice ? await stripe.invoices.retrieve(session.invoice as string) : null
+//         console.log("Session metadata: ", session.metadata);
+//         try {
+//             await createOrderInsanity(session, invoice)
+//         }
+//         catch (error) {
+//             console.error('Error creating order in sanity: ', error);
+//             return NextResponse.json({
+//                 error: `Error creating order: ${error}`
+//             }, {status: 400})
+//         }
+//     }
+//     console.log("EVENT TYPE: ", event.type);
+//     console.log("EVENT TYPE RECEIVED: ", event.type);
+//     return NextResponse.json({received: true})
+    
+// }
+
+
+// async function createOrderInsanity(session: Stripe.Checkout.Session, invoice: Stripe.Invoice | null) {
+//     const { id, amount_total, currency, metadata, payment_intent, total_details } = session;
+//     const { orderNumber, customerName, customerEmail, clerkUserId } = metadata as unknown as Metadata;
+
+//     const lineItemsWithProduct = await stripe.checkout.sessions.listLineItems(id, {expand:['data.price.product']})
+//     // Creating sanity product references
+//     const sanityProducts = lineItemsWithProduct.data.map((item) => (
+//         {
+//             _key: crypto.randomUUID(),
+//             product: {
+//                 _type: 'reference',
+//                 _ref: (item?.price?.product as Stripe.Product)?.metadata?.id,
+//             },
+//             quantity: item?.quantity || 0,
+//         }
+//     ));
+//     const order = await backendClient.create({
+//         _type: 'order',
+//         orderNumber,
+//         stripeCheckoutSessionId: id,
+//         stripePaymentIntentId: payment_intent,
+//         customerName,
+//         stripeCustomerId: customerEmail,
+//         email: customerEmail,
+//         currency,
+//         amountDiscount: total_details?.amount_discount ? total_details?.amount_discount/100 : 0,
+//         products: sanityProducts,
+//         totalPrice: amount_total ? amount_total / 100 : 0,
+//         status: 'paid',
+//         orderDate: new Date().toISOString(),
+//         invoice: invoice ? {
+//             id: invoice.id, 
+//             number: invoice.number,
+//             hosted_invoice_url: invoice?.
+//             hosted_invoice_url,
+//         } : null,
+//     });
+//     return order;
+// }
+
+import stripe from "@/lib/stripe";
+import { NextRequest, NextResponse } from "next/server";
+import Stripe from "stripe";
+
+export const runtime = "nodejs";
+
+export async function POST(request: NextRequest) {
+    console.log("🔥 WEBHOOK ENTERED");
+
+    const body = await request.text();
+
+    const sig = request.headers.get("stripe-signature");
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+    if (!sig || !webhookSecret) {
+        console.log("Missing sig or secret");
+        return NextResponse.json({ error: "Missing config" }, { status: 400 });
+    }
+
+    let event: Stripe.Event;
+
+    try {
+        event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
+    } catch (err) {
+        console.error("Stripe signature failed", err);
+        return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    }
+
+    console.log("EVENT TYPE:", event.type);
+
+    return NextResponse.json({ ok: true });
+}

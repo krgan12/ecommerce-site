@@ -44,7 +44,7 @@ export async function createCheckoutSession(items: CartItem[], metadata: Metadat
                 product_data: {
                     name: item.product.name || 'Unnamed product',
                     description: item.product.description,
-                    metadata: {id: item?.product._id},
+                    metadata: {id: item.product._id},
                     images: item.product.images && item.product.images.length > 0 ?
                     [urlFor(item.product.images[0]).url()] : undefined,
                 },
