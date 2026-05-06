@@ -31,7 +31,7 @@ function ProductGrid() {
             }
         }
         fetchData();
-    }, [selectedTab, params, query]);
+    }, [selectedTab]);
 
   return (
     <div className='mt-10 flex flex-col items-center'>
@@ -40,7 +40,7 @@ function ProductGrid() {
             <div className='flex flex-col items-center justify-center py-10 min-h-80 space-y-4 text-center bg-gray-100 rounded-lg w-full mt-10'>
                 <motion.div animate={{ scale: [1, 1.1, 1] }} transition={{repeat: Infinity, duration: 1.5}}  className='flex items-center space-x-2 text-blue-600'>
                     <Loader2 className='animate-spin'/>
-                    <span className='text-lg font-semibold'>Product is loading...</span>
+                    <span className='text-lg font-semibold'></span>
                 </motion.div>
             </div>
         ) : (
